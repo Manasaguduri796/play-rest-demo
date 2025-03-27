@@ -23,9 +23,9 @@ public class Dataset {
    @Enumerated(EnumType.STRING)
    @Column(name = "status",nullable = false)
    private Status status;
-   @Column(name = "createdBy",nullable = false)
+   @Column(name = "created_by",nullable = false)
    private String createdBy;
-   @Column(name = "updatedBy",nullable = false)
+   @Column(name = "updated_by",nullable = false)
    private String updatedBy;
    @CreationTimestamp
    private LocalDateTime createdByDate;
