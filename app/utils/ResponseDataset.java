@@ -1,8 +1,4 @@
 package utils;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import play.api.mvc.Result;
-
 import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -17,6 +13,7 @@ public class ResponseDataset {
         response.put("ts", Instant.now().toString());
 
         Map<String,Object> param = new LinkedHashMap<>();
+
         param.put("resmsgid", UUID.randomUUID().toString());
         param.put("status",status);
         param.put("error_msg",errorMessage);

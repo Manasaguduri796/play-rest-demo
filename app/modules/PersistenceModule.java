@@ -18,6 +18,4 @@ public class PersistenceModule extends AbstractModule {
     public EntityManager provideEntityManager(EntityManagerFactory ewf){
         return ewf.createEntityManager();
     }
-
-
 }

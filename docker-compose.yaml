@@ -1,0 +1,57 @@
+services:
+  database: # 1 container specifies services
+    image: postgres:17 # it is postgres images
+    container_name: postgres_db_play # here we are give container name
+    restart: always #Configures the container to always restart if it stops or crashes
+    environment: #setting environment variables  for postgres database
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: datasetapis
+    ports:
+      - "5434:5432" #port forwarding for databaseThis allows external applications to connect to PostgreSQL on the specified por
+    networks:
+      - sprplay-network #networks by this both container will interact with each other
+    volumes:
+      - postgres_data:/var/lib/postgresql/data #volume is a backup process where we can restore our data Mounts a named volume called postgres_data to the directory data inside the container.
+
+
+  app: #services
+    image: manasaguduri796/springbootapis:latest
+    container_name: springboot_apps
+    depends_on:
+      - database
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/datasetapis
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: password
+    ports:
+      - "8083:8083" # it is a port mapping here we can map port left side is the host port where we can expose outside right side is the conatiner port where we cannot expose outside port will listen by inside container we cant change right side port but we can change left side port
+    networks:
+      - sprplay-network
+
+
+  app1:
+    image: manasaguduri796/play-rest-demo:v4
+    container_name: play_rest_apis
+    depends_on:
+      - database
+    restart: always
+#    environment:
+#      db.default.url: jdbc:postgresql://database:5432/datasetapis
+#      db.default.username: postgres
+#      db.default.password: password
+    ports:
+      - "9000:9000"
+    networks:
+      - sprplay-network
+    volumes:
+      - ./persistence.xml:/app/restdemo-1.0-SNAPSHOT/conf/META-INF/persistence.xml
+volumes:
+      postgres_data:
+networks:
+      sprplay-network:
+        driver: bridge
+
+
+

@@ -17,7 +17,6 @@ public class HomeController extends Controller {
         this.datasetService = datasetService;
     }
 
-
     public Result getDatasetAll(){
         Map<String,Object> datasetget = datasetService.getAll();
         int statusCode = (int) datasetget.get("responseCode");
@@ -28,6 +27,4 @@ public class HomeController extends Controller {
         int statusCode = (int) datasetgetbyid.get("responseCode");
         return statusCode == 404 ? notFound(Json.toJson(datasetgetbyid)) : ok(Json.toJson(datasetgetbyid));
     }
-
-
 }
